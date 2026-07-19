@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>World Cup Player Stats Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="badge">&#9917; FIFA World Cup</span>
+      <h1>World Cup Player Stats <span class="gold">Dashboard</span></h1>
+      <p>Explore historical FIFA World Cup data &mdash; top scorers, tournament goals, discipline trends, and more.</p>
+    </div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <span id="themeIcon">&#9788;</span>
+    </button>
+  </div>
+</header>
+
+<!-- FILTERS -->
+<section class="filters-bar">
+  <div class="container">
+    <label>Tournament Year
+      <select id="filterYear">
+        <option value="all">All Years</option>
+      </select>
+    </label>
+    <label>Country
+      <select id="filterCountry">
+        <option value="all">All Countries</option>
+      </select>
+    </label>
+    <label>Stage
+      <select id="filterStage">
+        <option value="all">All Stages</option>
+        <option value="Group">Group Stage</option>
+        <option value="Round of 16">Round of 16</option>
+        <option value="Quarter-final">Quarter-final</option>
+        <option value="Semi-final">Semi-final</option>
+        <option value="Final">Final</option>
+      </select>
+    </label>
+    <button class="btn-reset" id="resetFilters">Reset Filters</button>
+  </div>
+</section>
+
+<!-- KPI CARDS -->
+<section class="kpi-section">
+  <div class="container kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-icon">&#127942;</div>
+      <div class="kpi-value" id="kpiTournaments">22</div>
+      <div class="kpi-label">Total Tournaments</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">&#9917;</div>
+      <div class="kpi-value" id="kpiMatches">900+</div>
+      <div class="kpi-label">Total Matches</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">&#127919;</div>
+      <div class="kpi-value" id="kpiGoals">2,548</div>
+      <div class="kpi-label">Total Goals</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">&#128100;</div>
+      <div class="kpi-value" id="kpiPlayers">7,000+</div>
+      <div class="kpi-label">Total Players</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon">&#128205;</div>
+      <div class="kpi-value" id="kpiNations">80+</div>
+      <div class="kpi-label">Nations Participated</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section class="insights-section">
+  <div class="container insights-grid" id="insightCards">
+    <!-- filled by JS -->
+  </div>
+</section>
+
+<!-- CHARTS -->
+<main class="container charts-layout">
+
+  <div class="chart-card full-width">
+    <h2>Top World Cup Scorers of All Time</h2>
+    <p class="chart-desc">Players ranked by total goals scored across all FIFA World Cup editions.</p>
+    <div class="chart-wrapper">
+      <canvas id="chartTopScorers"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h2>Goals Per Tournament</h2>
+    <p class="chart-desc">Total goals scored in each World Cup edition from 1930 to 2022.</p>
+    <div class="chart-wrapper">
+      <canvas id="chartGoalsPerTournament"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h2>Goals by Match Period</h2>
+    <p class="chart-desc">Distribution of goals by 15-minute intervals throughout matches.</p>
+    <div class="chart-wrapper">
+      <canvas id="chartGoalsByPeriod"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card full-width">
+    <h2>Most Capped World Cup Players</h2>
+    <p class="chart-desc">Players with the most appearances across World Cup tournaments.</p>
+    <div class="chart-wrapper">
+      <canvas id="chartAppearances"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h2>Cards Per Tournament</h2>
+    <p class="chart-desc">Yellow and red card discipline trends across World Cup editions.</p>
+    <div class="chart-wrapper">
+      <canvas id="chartCards"></canvas>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h2>Average Goals Per Match</h2>
+    <p class="chart-desc">How the average number of goals per game has evolved over time.</p>
+    <div class="chart-wrapper">
+      <canvas id="chartAvgGoals"></canvas>
+    </div>
+  </div>
+
+</main>
+
+<!-- DATA TABLE -->
+<section class="container table-section">
+  <div class="table-header">
+    <h2>Top Players Data Table</h2>
+    <input type="search" id="tableSearch" placeholder="Search players..." class="search-input" />
+  </div>
+  <div class="table-wrapper">
+    <table id="playersTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Player</th>
+          <th>Country</th>
+          <th>Goals</th>
+          <th>Appearances</th>
+          <th>Tournaments</th>
+        </tr>
+      </thead>
+      <tbody id="playersTableBody">
+        <!-- filled by JS -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PLAYER COMPARISON -->
+<section class="container comparison-section">
+  <h2>Player Comparison Panel</h2>
+  <div class="comparison-controls">
+    <select id="comparePlayer1"><option value="">Select Player 1</option></select>
+    <span class="vs-badge">VS</span>
+    <select id="comparePlayer2"><option value="">Select Player 2</option></select>
+  </div>
+  <div class="comparison-result" id="comparisonResult"></div>
+</section>
+
+<footer class="footer">
+  <p>Data sourced from the <strong>Fjelstul World Cup Database</strong> &amp; DataHub public datasets. Built with Chart.js &amp; vanilla JS. &#9917;</p>
+  <p class="footer-sub">FIFA World Cup 1930&ndash;2022 &mdash; All historical data</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
